@@ -11,3 +11,8 @@ compose:
 
 down:
 	@docker-compose down
+
+heroku:
+	@heroku container:login
+	@heroku container:push -a pablo-flask-api web
+	@heroku container:release -a pablo-flask-api web
