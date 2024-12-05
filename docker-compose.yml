@@ -5,8 +5,8 @@ services:
     image: mongo:8.0
     container_name: mongodb
     environment:
-        MONGO_INITDB_ROOT_USERNAME: admin
-        MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     restart: always
 
   api:
@@ -24,4 +24,4 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - ./application:/app//application
+      - ./application:/app/application
