@@ -21,6 +21,9 @@ jobs:
           pip install flake8 pytest
           pip install git+https://github.com/psf/black
 
+      - name: Check code format
+        run: black --check
+
       - name: Run tests
         run: black --check
         run: make test
