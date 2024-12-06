@@ -19,8 +19,10 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install flake8 pytest
+          pip install git+https://github.com/psf/black
 
       - name: Run tests
+        run: black --check
         run: make test
 
   deploy:
