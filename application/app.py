@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from mongoengine import NotUniqueError
-from .model import UserModel
+from .model import UserModel, HealthCheckModel
 import re
 
 _user_parser = reqparse.RequestParser()
@@ -30,6 +30,16 @@ _user_parser.add_argument('birth_date',
                           required=True,
                           help="This field cannot be blank."
                           )
+
+
+class HealthCheck(Resource):
+    def get(self):
+        response = HealthCheckModel.objects(status="healthcheck")
+        if response:
+            return "Healthy", 200
+        else:
+            HealthCheckModel(status="healthcheck").save()
+            return "Healthy", 200
 
 
 class Users(Resource):
@@ -87,3 +97,25 @@ class User(Resource):
             return jsonify(response)
 
         return {"message": "User does not exist in database!"}, 400
+
+    def patch(self):
+        data = _user_parser.parse_args()
+
+        if not self.validate_cpf(data["cpf"]):
+            return {"message": "CPF is invalid!"}, 400
+
+        response = UserModel.objects(cpf=data["cpf"])
+        if response:
+            response.update(**data)
+            return {"message": "User updated!"}, 200
+        else:
+            return {"message": "User does not exist in database!"}, 400
+
+    def delete(self, cpf):
+        response = UserModel.objects(cpf=cpf)
+
+        if response:
+            response.delete()
+            return {"message": "User deleted!"}, 200
+        else:
+            return {"message": "User does not exist in database!"}, 400
