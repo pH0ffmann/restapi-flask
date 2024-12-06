@@ -22,10 +22,9 @@ jobs:
           pip install git+https://github.com/psf/black
 
       - name: Check code format
-        run: black --check
+        run: black .
 
       - name: Run tests
-        run: black --check
         run: make test
 
   deploy:
