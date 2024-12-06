@@ -25,7 +25,6 @@ jobs:
         run: black --check
 
       - name: Run tests
-        run: black --check
         run: make test
 
   deploy:
