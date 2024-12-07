@@ -27,10 +27,7 @@ jobs:
 
       - name: Run tests and security scan
         run: make test
-      
-      - name: Run security code scan
-        run: bandit -r . -x '/.venv/','/tests/'
-
+        
   deploy:
     needs: test
     runs-on: ubuntu-latest
