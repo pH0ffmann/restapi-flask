@@ -3,6 +3,7 @@ APP = restapi
 test:
 	@flake8 . --exclude .venv
 	@pytest -v -p no:warnings 
+	@bandit -r . -x '/.venv/','/tests/'
 
 
 compose:

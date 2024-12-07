@@ -25,11 +25,8 @@ jobs:
       - name: Check code format
         run: black .
 
-      - name: Run tests
+      - name: Run tests and security scan
         run: make test
-      
-      - name: Run security code scan
-        run: bandit -r . -x '/.venv/','/tests/'
 
   deploy:
     needs: test
