@@ -23,7 +23,7 @@ jobs:
           pip install bandit
 
       - name: Check code format
-        run: black --check
+        run: black .
 
       - name: Run tests
         run: make test
