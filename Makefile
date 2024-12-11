@@ -1,10 +1,9 @@
-APP = restapi
+APP = restapi-flask
 
 test:
 	@flake8 . --exclude .venv
 	@pytest -v -p no:warnings 
 	@bandit -r . -x '/.venv/','/tests/'
-
 
 compose:
 	@docker-compose build
@@ -32,3 +31,11 @@ setup-dev:
 
 teardown-dev:
 	@kind delete clusters kind
+
+deploy-dev:
+	@docker build -t $(APP):latest .
+	@kind load docker-image $(APP):latest
+	@kubectl apply -f kubernetes/manifests
+	@kubectl rollout restart deploy restapi-flask
+
+dev: setup-dev deploy-dev
